@@ -17,6 +17,48 @@
   margin: 0;
 }
 
+/* Work Order Title */
+.work-order-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+}
+
+.work-order-title h2 {
+  margin: 0;
+}
+
+.wo-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.wo-status-draft {
+  background: var(--secondary-bg);
+  color: var(--text-secondary);
+}
+
+.wo-status-in-progress {
+  background: var(--info-bg);
+  color: var(--info-color);
+}
+
+.wo-status-completed {
+  background: var(--success-bg);
+  color: var(--success-color);
+}
+
+.wo-status-cancelled {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+}
+
 .plan-selector {
   display: flex;
   align-items: center;

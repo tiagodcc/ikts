@@ -132,7 +132,7 @@ export function PlanManager() {
     <div className="plan-manager">
       <div className="plan-sidebar">
         <div className="sidebar-header">
-          <h3>📋 Plans</h3>
+          <h3>Plans</h3>
           <div className="sidebar-actions">
             <button
               className="btn btn-primary btn-sm"
@@ -141,7 +141,7 @@ export function PlanManager() {
               + New
             </button>
             <label className="btn btn-secondary btn-sm">
-              📥
+              Import
               <input
                 type="file"
                 accept=".json"
@@ -162,7 +162,7 @@ export function PlanManager() {
                 onClick={addExamplePlan}
                 style={{ marginTop: '0.5rem' }}
               >
-                📋 Add Example Plan
+                Add Example Plan
               </button>
             </div>
           ) : (
@@ -206,13 +206,13 @@ export function PlanManager() {
                   className="btn btn-secondary"
                   onClick={() => handleExportPlan(currentPlan)}
                 >
-                  📤 Export
+                  Export
                 </button>
                 <button
                   className="btn btn-secondary"
                   onClick={() => duplicatePlan(currentPlan.id)}
                 >
-                  📄 Duplicate
+                  Duplicate
                 </button>
                 <button
                   className="btn btn-danger"
@@ -222,7 +222,7 @@ export function PlanManager() {
                     }
                   }}
                 >
-                  🗑️ Delete
+                  Delete
                 </button>
               </div>
             </div>
@@ -258,7 +258,7 @@ export function PlanManager() {
                   ([type, pieces]) => (
                     <div key={type} className="type-group">
                       <h4 className="type-header">
-                        🔩 {type}
+                        {type}
                         <span className="type-count">
                           {pieces.reduce((sum, p) => sum + p.quantity, 0)} pieces
                         </span>
@@ -288,7 +288,7 @@ export function PlanManager() {
                                 className="btn btn-sm btn-secondary"
                                 onClick={() => openEditPiece(piece)}
                               >
-                                ✏️
+                                Edit
                               </button>
                               <button
                                 className="btn btn-sm btn-danger"
@@ -296,7 +296,7 @@ export function PlanManager() {
                                   removePieceFromPlan(currentPlan.id, piece.id)
                                 }
                               >
-                                🗑️
+                                Delete
                               </button>
                             </div>
                           </div>
@@ -310,7 +310,7 @@ export function PlanManager() {
           </>
         ) : (
           <div className="no-plan-selected">
-            <div className="empty-icon">📋</div>
+            <div className="empty-icon"></div>
             <h3>No Plan Selected</h3>
             <p>Select a plan from the sidebar or create a new one</p>
             <button

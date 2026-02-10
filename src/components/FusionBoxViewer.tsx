@@ -179,7 +179,7 @@ export function FusionBoxViewer() {
         </div>
 
         <div className="materials-legend">
-          <h3>📋 Materials List</h3>
+          <h3>Materials List</h3>
           <div className="legend-list">
             {Object.entries(
               currentPlan.requiredPieces.reduce((acc, piece) => {
@@ -190,7 +190,7 @@ export function FusionBoxViewer() {
               }, {} as Record<string, CutPiece[]>)
             ).map(([type, pieces]) => (
               <div key={type} className="legend-group">
-                <h4>🔩 {type}</h4>
+                <h4>{type}</h4>
                 <ul>
                   {pieces.map((piece) => (
                     <li key={piece.id}>

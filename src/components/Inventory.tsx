@@ -125,19 +125,19 @@ export function Inventory() {
   return (
     <div className="inventory">
       <div className="inventory-header">
-        <h2>🔧 Copper Rail Inventory</h2>
+        <h2>Copper Rail Inventory</h2>
         <div className="inventory-actions">
           <button className="btn btn-primary" onClick={() => setShowAddForm(true)}>
             + Add Rail
           </button>
           <button className="btn btn-secondary" onClick={handleAddInitialStock}>
-            📦 Add Initial Stock
+            Add Initial Stock
           </button>
           <button className="btn btn-secondary" onClick={handleExport}>
-            📤 Export
+            Export
           </button>
           <label className="btn btn-secondary">
-            📥 Import
+            Import
             <input
               type="file"
               accept=".json"
@@ -152,7 +152,7 @@ export function Inventory() {
                 if (confirm('Clear all inventory?')) clearInventory();
               }}
             >
-              🗑️ Clear
+              Clear
             </button>
           )}
         </div>
@@ -229,7 +229,7 @@ export function Inventory() {
                     {rail.width}×{rail.thickness}mm
                   </span>
                   {rail.isRemainder && (
-                    <span className="badge remainder-badge">♻️ Remainder</span>
+                    <span className="badge remainder-badge">Remainder</span>
                   )}
                 </div>
                 <div className="rail-meta">
@@ -242,7 +242,7 @@ export function Inventory() {
                   className="btn btn-sm btn-primary"
                   onClick={() => setShowCutModal(rail.id)}
                 >
-                  ✂️ Cut
+                  Cut
                 </button>
                 <button
                   className="btn btn-sm btn-danger"
@@ -250,7 +250,7 @@ export function Inventory() {
                     if (confirm('Remove this rail?')) removeRail(rail.id);
                   }}
                 >
-                  🗑️
+                  Delete
                 </button>
               </div>
             </div>

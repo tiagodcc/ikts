@@ -77,3 +77,32 @@ export const COMMON_RAIL_TYPES: RailType[] = [
 
 // Minimum usable remainder length (in mm)
 export const MIN_USABLE_LENGTH = 50;
+
+// Work Order Status
+export type WorkOrderStatus = 'draft' | 'in-progress' | 'completed' | 'cancelled';
+
+// Executed Cut - tracks actual cuts made during work order execution
+export interface ExecutedCut {
+  id: string;
+  suggestionIndex: number; // reference to the original suggestion
+  pieceId: string;
+  sourceRailId: string;
+  cutLength: number;
+  executedAt: Date;
+  executedBy?: string;
+}
+
+// Work Order - represents a single execution instance of a plan
+export interface WorkOrder {
+  id: string;
+  planId: string;
+  planName: string; // snapshot of plan name at creation
+  status: WorkOrderStatus;
+  createdAt: Date;
+  startedAt?: Date;
+  completedAt?: Date;
+  executedCuts: ExecutedCut[];
+  notes?: string;
+  // Snapshot of the material plan at work order creation
+  materialPlanSnapshot?: MaterialPlan;
+}
