@@ -4,7 +4,7 @@ import { PlansProvider } from './context/PlansContext';
 import { WorkOrderProvider, useWorkOrders } from './context/WorkOrderContext';
 import { Inventory } from './components/Inventory';
 import { PlanManager } from './components/PlanManager';
-import { MaterialOptimizer } from './components/MaterialOptimizer';
+import { WorkOrderExecution } from './components/WorkOrderExecution';
 import { WorkOrderList } from './components/WorkOrderList';
 import type { WorkOrder } from './types';
 import './App.css';
@@ -60,7 +60,7 @@ function AppContent() {
         {activeTab === 'plans' && <PlanManager />}
         {activeTab === 'work-orders' && (
           currentWorkOrder ? (
-            <MaterialOptimizer 
+            <WorkOrderExecution 
               workOrder={currentWorkOrder} 
               onBack={handleBackToList} 
             />

@@ -78,8 +78,50 @@ export const COMMON_RAIL_TYPES: RailType[] = [
 // Minimum usable remainder length (in mm)
 export const MIN_USABLE_LENGTH = 50;
 
+// Work Order Phases - strict sequential flow
+export type WorkOrderPhase = 
+  | 'gathering'    // Engineer gathers parts from boxes
+  | 'cutting'      // Engineer cuts parts according to plan
+  | 'returning'    // Engineer returns remainders and disposes waste
+  | 'completed';   // Work order finished
+
 // Work Order Status
 export type WorkOrderStatus = 'draft' | 'in-progress' | 'completed' | 'cancelled';
+
+// Gathering Step - tracks each part that needs to be gathered
+export interface GatheringStep {
+  id: string;
+  railType: RailType;
+  sourceRailId: string;
+  length: number;
+  isRemainder: boolean;
+  isFromNewStock: boolean; // true if this needs to be taken from new stock
+  confirmed: boolean;
+  confirmedAt?: Date;
+}
+
+// Cutting Step - tracks each cut that needs to be made
+export interface CuttingStep {
+  id: string;
+  suggestionIndex: number;
+  sourceRailId: string;
+  pieceId: string;
+  railType: RailType;
+  sourceLength: number;
+  cutLength: number;
+  remainderLength: number;
+  wasteLength: number;
+  purpose: string;
+  confirmed: boolean;
+  confirmedAt?: Date;
+}
+
+// Return Step - confirmation that parts were returned
+export interface ReturnConfirmation {
+  confirmed: boolean;
+  confirmedAt?: Date;
+  notes?: string;
+}
 
 // Executed Cut - tracks actual cuts made during work order execution
 export interface ExecutedCut {
@@ -98,11 +140,20 @@ export interface WorkOrder {
   planId: string;
   planName: string; // snapshot of plan name at creation
   status: WorkOrderStatus;
+  phase: WorkOrderPhase;
   createdAt: Date;
   startedAt?: Date;
   completedAt?: Date;
+  
+  // Phase tracking
+  gatheringSteps: GatheringStep[];
+  cuttingSteps: CuttingStep[];
+  returnConfirmation: ReturnConfirmation;
+  
+  // Legacy field for compatibility
   executedCuts: ExecutedCut[];
   notes?: string;
+  
   // Snapshot of the material plan at work order creation
   materialPlanSnapshot?: MaterialPlan;
 }

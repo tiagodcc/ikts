@@ -158,6 +158,17 @@
   gap: 0.5rem;
 }
 
+.phase-info {
+  display: flex;
+  align-items: center;
+}
+
+.phase-info .phase-label {
+  font-size: 0.85rem;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
 .progress-bar {
   height: 8px;
   background: var(--secondary-bg);

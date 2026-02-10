@@ -1,0 +1,602 @@
+.work-order-execution {
+  padding: 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Header */
+.execution-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.execution-header .back-btn {
+  flex-shrink: 0;
+}
+
+.header-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-info h2 {
+  margin: 0;
+}
+
+.execution-header .cancel-btn {
+  flex-shrink: 0;
+}
+
+/* Status Badge */
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-draft {
+  background: var(--secondary-bg);
+  color: var(--text-secondary);
+}
+
+.status-in-progress {
+  background: var(--info-bg);
+  color: var(--info-color);
+}
+
+.status-completed {
+  background: var(--success-bg);
+  color: var(--success-color);
+}
+
+.status-cancelled {
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger-color);
+}
+
+/* Phase Indicator */
+.phase-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.phase-indicator::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 40px;
+  right: 40px;
+  height: 2px;
+  background: var(--border-color);
+  z-index: 0;
+}
+
+.phase-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.phase-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--secondary-bg);
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.phase-step.active .phase-circle {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.phase-step.completed .phase-circle {
+  background: var(--success-color);
+  border-color: var(--success-color);
+  color: white;
+}
+
+.phase-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.phase-step.active .phase-label {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+/* Phase Content */
+.phase-content {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.phase-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.phase-header h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.phase-header p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* Reference Section */
+.reference-section {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.reference-image {
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+/* Progress Info */
+.progress-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.progress-info span {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--secondary-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-color), var(--success-color));
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* Current Step Card */
+.current-step-card {
+  background: linear-gradient(135deg, var(--secondary-bg), var(--highlight-bg));
+  border: 2px solid var(--primary-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.step-number {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.step-type {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.step-type.remainder {
+  background: var(--success-bg);
+  color: var(--success-color);
+}
+
+.step-type.new-stock {
+  background: var(--info-bg);
+  color: var(--info-color);
+}
+
+.step-content {
+  display: flex;
+  gap: 1.5rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.step-icon {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.step-details {
+  flex: 1;
+}
+
+.step-details h4 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+}
+
+.step-length {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 0.5rem;
+}
+
+.step-instruction {
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.confirm-btn {
+  width: 100%;
+}
+
+/* Cutting Phase Specific */
+.cut-visualization {
+  margin-bottom: 1rem;
+}
+
+.rail-diagram {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rail-source {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.rail-bar {
+  display: flex;
+  height: 40px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--secondary-bg);
+}
+
+.cut-section {
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-width: 60px;
+}
+
+.remainder-section {
+  background: var(--success-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  min-width: 50px;
+}
+
+.waste-section {
+  background: var(--danger-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  min-width: 40px;
+}
+
+.cut-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cut-info {
+  font-size: 0.95rem;
+}
+
+.cut-info.remainder-info {
+  color: var(--success-color);
+}
+
+.cut-info.waste-info {
+  color: var(--danger-color);
+}
+
+/* Completed Steps */
+.completed-steps {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.completed-steps h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.completed-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.completed-step:last-child {
+  border-bottom: none;
+}
+
+.check-mark {
+  color: var(--success-color);
+  font-weight: bold;
+}
+
+.step-source,
+.step-purpose {
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Return Phase */
+.returning-phase {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.return-instructions {
+  text-align: center;
+}
+
+.return-instructions h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.return-instructions p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.return-section {
+  background: var(--secondary-bg);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.return-section h4 {
+  margin: 0 0 0.5rem 0;
+}
+
+.return-hint {
+  margin: 0 0 1rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.return-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.return-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--card-bg);
+  border-radius: 6px;
+}
+
+.return-item.remainder {
+  border-left: 3px solid var(--success-color);
+}
+
+.return-item.waste {
+  border-left: 3px solid var(--danger-color);
+}
+
+.return-icon {
+  font-size: 1.25rem;
+}
+
+.return-type {
+  flex: 1;
+  font-weight: 500;
+}
+
+.return-length {
+  color: var(--text-secondary);
+}
+
+.no-returns {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 1rem;
+}
+
+.return-confirmation {
+  margin-top: 1rem;
+}
+
+.return-confirmation .form-group {
+  margin-bottom: 1rem;
+}
+
+.return-confirmation label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.return-confirmation textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  resize: vertical;
+}
+
+/* Phase Complete Message */
+.phase-complete-message {
+  text-align: center;
+  padding: 2rem;
+  background: var(--success-bg);
+  border-radius: 8px;
+}
+
+.phase-complete-message h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--success-color);
+}
+
+.phase-complete-message p {
+  margin: 0 0 1.5rem 0;
+  color: var(--text-secondary);
+}
+
+/* Completed Phase */
+.completed-phase {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.completion-message {
+  margin-bottom: 2rem;
+}
+
+.completion-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--success-color);
+  color: white;
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.completion-message h2 {
+  margin: 0 0 0.5rem 0;
+}
+
+.completion-message p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.completion-summary {
+  background: var(--secondary-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.completion-summary h3 {
+  margin: 0 0 1rem 0;
+}
+
+.summary-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .execution-header {
+    flex-wrap: wrap;
+  }
+
+  .header-info {
+    order: -1;
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+
+  .phase-indicator {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .phase-indicator::before {
+    left: 20px;
+    right: 20px;
+  }
+
+  .step-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .summary-stats {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

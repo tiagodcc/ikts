@@ -3,7 +3,7 @@ import { useWorkOrders } from '../context/WorkOrderContext';
 import { usePlans } from '../context/PlansContext';
 import { useInventory } from '../context/InventoryContext';
 import { formatDate } from '../utils/helpers';
-import type { WorkOrder, WorkOrderStatus } from '../types';
+import type { WorkOrder, WorkOrderStatus, WorkOrderPhase } from '../types';
 import './WorkOrderList.css';
 
 interface WorkOrderListProps {
@@ -40,11 +40,28 @@ export function WorkOrderList({ onSelectWorkOrder }: WorkOrderListProps) {
     return badges[status];
   };
 
-  const getProgressPercentage = (workOrder: WorkOrder): number => {
-    if (!workOrder.materialPlanSnapshot) return 0;
-    const total = workOrder.materialPlanSnapshot.suggestions.length;
-    if (total === 0) return 0;
-    return Math.round((workOrder.executedCuts.length / total) * 100);
+  const getPhaseLabel = (phase: WorkOrderPhase): string => {
+    const labels: Record<WorkOrderPhase, string> = {
+      'gathering': 'Gathering Parts',
+      'cutting': 'Cutting',
+      'returning': 'Returning Parts',
+      'completed': 'Completed',
+    };
+    return labels[phase];
+  };
+
+  const getPhaseProgress = (workOrder: WorkOrder): { current: number; total: number } => {
+    const phase = workOrder.phase;
+    if (phase === 'gathering') {
+      const confirmed = workOrder.gatheringSteps.filter(s => s.confirmed).length;
+      return { current: confirmed, total: workOrder.gatheringSteps.length };
+    } else if (phase === 'cutting') {
+      const confirmed = workOrder.cuttingSteps.filter(s => s.confirmed).length;
+      return { current: confirmed, total: workOrder.cuttingSteps.length };
+    } else if (phase === 'returning') {
+      return { current: workOrder.returnConfirmation.confirmed ? 1 : 0, total: 1 };
+    }
+    return { current: 1, total: 1 };
   };
 
   return (
@@ -109,8 +126,10 @@ export function WorkOrderList({ onSelectWorkOrder }: WorkOrderListProps) {
         ) : (
           filteredWorkOrders.map((workOrder) => {
             const badge = getStatusBadge(workOrder.status);
-            const progress = getProgressPercentage(workOrder);
-            const totalCuts = workOrder.materialPlanSnapshot?.suggestions.length || 0;
+            const phaseProgress = getPhaseProgress(workOrder);
+            const progressPercent = phaseProgress.total > 0 
+              ? Math.round((phaseProgress.current / phaseProgress.total) * 100) 
+              : 0;
 
             return (
               <div key={workOrder.id} className="work-order-card">
@@ -131,16 +150,19 @@ export function WorkOrderList({ onSelectWorkOrder }: WorkOrderListProps) {
                   )}
                 </div>
 
-                {workOrder.status !== 'cancelled' && totalCuts > 0 && (
+                {workOrder.status === 'in-progress' && (
                   <div className="card-progress">
+                    <div className="phase-info">
+                      <span className="phase-label">Phase: {getPhaseLabel(workOrder.phase)}</span>
+                    </div>
                     <div className="progress-bar">
                       <div 
                         className="progress-fill" 
-                        style={{ width: `${progress}%` }}
+                        style={{ width: `${progressPercent}%` }}
                       />
                     </div>
                     <span className="progress-text">
-                      {workOrder.executedCuts.length} / {totalCuts} cuts ({progress}%)
+                      {phaseProgress.current} / {phaseProgress.total} ({progressPercent}%)
                     </span>
                   </div>
                 )}
@@ -154,17 +176,9 @@ export function WorkOrderList({ onSelectWorkOrder }: WorkOrderListProps) {
                     className="btn btn-primary btn-sm"
                     onClick={() => onSelectWorkOrder(workOrder)}
                   >
-                    {workOrder.status === 'draft' ? 'Start' : 'View'} Work Order
+                    {workOrder.status === 'draft' ? 'Start' : 
+                     workOrder.status === 'in-progress' ? 'Continue' : 'View'} Work Order
                   </button>
-                  
-                  {workOrder.status === 'in-progress' && (
-                    <button
-                      className="btn btn-secondary btn-sm"
-                      onClick={() => updateWorkOrderStatus(workOrder.id, 'completed')}
-                    >
-                      Mark Complete
-                    </button>
-                  )}
                   
                   {(workOrder.status === 'draft' || workOrder.status === 'in-progress') && (
                     <button
