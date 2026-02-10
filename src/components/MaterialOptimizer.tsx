@@ -150,25 +150,10 @@ export function MaterialOptimizer() {
             <div className="reference-image-container">
               <h3>📐 Fusion Box Reference</h3>
               <img src={fusionBoxImage} alt="Fusion Box Diagram" className="reference-image" />
-              <p className="reference-caption">Reference diagram for {planToOptimize.name}</p>
             </div>
             <div className="plan-info">
               <h3>📋 {planToOptimize.name}</h3>
               {planToOptimize.description && <p className="plan-description">{planToOptimize.description}</p>}
-              <div className="plan-stats">
-                <div className="plan-stat">
-                  <span className="plan-stat-value">{planToOptimize.requiredPieces.reduce((sum, p) => sum + p.quantity, 0)}</span>
-                  <span className="plan-stat-label">Total Pieces</span>
-                </div>
-                <div className="plan-stat">
-                  <span className="plan-stat-value">{materialPlan.suggestions.length}</span>
-                  <span className="plan-stat-label">Cuts Required</span>
-                </div>
-                <div className="plan-stat">
-                  <span className="plan-stat-value">{materialPlan.usedRemainders}</span>
-                  <span className="plan-stat-label">♻️ Remainders Used</span>
-                </div>
-              </div>
             </div>
           </div>
 
