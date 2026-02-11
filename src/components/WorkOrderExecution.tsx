@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useWorkOrders } from '../context/WorkOrderContext';
 import { useInventory } from '../context/InventoryContext';
 import { formatLength } from '../utils/helpers';
+import { turnOnLedForLength, turnOffLedForLength, turnOffAllLeds, getLedIdForLength, getBoxDescription } from '../utils/ledApi';
 import type { WorkOrder, GatheringStep, CuttingStep } from '../types';
 import fusionBoxImage from '../assets/fusion-box.png';
 import './WorkOrderExecution.css';
@@ -51,6 +52,28 @@ export function WorkOrderExecution({ workOrder, onBack }: WorkOrderExecutionProp
   const gatheringProgress = workOrder.gatheringSteps.filter(s => s.confirmed).length;
   const totalGatheringSteps = workOrder.gatheringSteps.length;
 
+  // LED control for remainder gathering steps
+  useEffect(() => {
+    // When a remainder gathering step is shown, turn on the appropriate LED
+    if (workOrder.phase === 'gathering' && currentGatheringStep?.isRemainder) {
+      turnOnLedForLength(currentGatheringStep.length);
+    }
+    
+    // Cleanup: turn off LEDs when component unmounts or step changes
+    return () => {
+      if (currentGatheringStep?.isRemainder) {
+        turnOffLedForLength(currentGatheringStep.length);
+      }
+    };
+  }, [workOrder.phase, currentGatheringStep?.id, currentGatheringStep?.isRemainder, currentGatheringStep?.length]);
+
+  // Turn off all LEDs when leaving the gathering phase or completing
+  useEffect(() => {
+    if (workOrder.phase !== 'gathering') {
+      turnOffAllLeds();
+    }
+  }, [workOrder.phase]);
+
   // Group cutting steps by source rail
   const railGroups: RailCuttingGroup[] = [];
   const railGroupMap = new Map<string, RailCuttingGroup>();
@@ -84,6 +107,10 @@ export function WorkOrderExecution({ workOrder, onBack }: WorkOrderExecutionProp
   const cuttingProgress = workOrder.cuttingSteps.filter(s => s.confirmed).length;
 
   const handleConfirmGathering = (step: GatheringStep) => {
+    // Turn off the LED when confirming a remainder step
+    if (step.isRemainder) {
+      turnOffLedForLength(step.length);
+    }
     confirmGatheringStep(workOrder.id, step.id);
   };
 
@@ -195,32 +222,50 @@ export function WorkOrderExecution({ workOrder, onBack }: WorkOrderExecutionProp
         </div>
 
         {currentGatheringStep && (
-          <div className="current-step-card">
+          <div className={`current-step-card ${currentGatheringStep.isRemainder ? 'remainder-card' : 'new-stock-card'}`}>
             <div className="step-header">
               <span className="step-number">Step {gatheringProgress + 1} of {totalGatheringSteps}</span>
               <span className={`step-type ${currentGatheringStep.isRemainder ? 'remainder' : 'new-stock'}`}>
-                {currentGatheringStep.isRemainder ? 'From Remainder Box' : 'From New Stock'}
+                {currentGatheringStep.isRemainder ? 'SPARE PART BOX' : 'NEW RAW MATERIAL'}
               </span>
             </div>
             
-            <div className="step-content">
-              <div className="step-icon">
+            {/* Source indicator banner */}
+            <div className={`source-banner ${currentGatheringStep.isRemainder ? 'remainder-banner' : 'new-stock-banner'}`}>
+              <div className="banner-icon">
                 {currentGatheringStep.isRemainder ? '♻' : '📦'}
               </div>
+              <div className="banner-text">
+                {currentGatheringStep.isRemainder 
+                  ? `REMAINDER BOX - ${getBoxDescription(currentGatheringStep.length)}`
+                  : 'FRESH RAW MATERIAL - New Stock'
+                }
+              </div>
+            </div>
+            
+            <div className="step-content">
               <div className="step-details">
                 <h4>Collect: {currentGatheringStep.railType.label} Rail</h4>
                 <p className="step-length">Length: {formatLength(currentGatheringStep.length)}</p>
                 <p className="step-instruction">
                   {currentGatheringStep.isRemainder 
-                    ? `Go to the ${currentGatheringStep.railType.label} remainder box and get a piece of ${formatLength(currentGatheringStep.length)}.`
-                    : `Go to the ${currentGatheringStep.railType.label} new stock and get a rail of ${formatLength(currentGatheringStep.length)}.`
+                    ? `Go to the spare parts area and find a ${currentGatheringStep.railType.label} piece of ${formatLength(currentGatheringStep.length)} in the ${getBoxDescription(currentGatheringStep.length)}.`
+                    : `Go to the raw material storage and get a fresh ${currentGatheringStep.railType.label} rail of ${formatLength(currentGatheringStep.length)}.`
                   }
                 </p>
+                {currentGatheringStep.isRemainder && getLedIdForLength(currentGatheringStep.length) && (
+                  <div className="led-indicator">
+                    <span className="led-icon active"></span>
+                    <span className="led-text">
+                      LED {getLedIdForLength(currentGatheringStep.length)} is ON - Look for the lit indicator
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 
             <button 
-              className="btn btn-primary btn-large confirm-btn"
+              className={`btn btn-large confirm-btn ${currentGatheringStep.isRemainder ? 'btn-remainder' : 'btn-primary'}`}
               onClick={() => handleConfirmGathering(currentGatheringStep)}
             >
               Confirm Part Collected
