@@ -253,7 +253,7 @@ export function WorkOrderExecution({ workOrder, onBack }: WorkOrderExecutionProp
                     : `Go to the raw material storage and get a fresh ${currentGatheringStep.railType.label} rail of ${formatLength(currentGatheringStep.length)}.`
                   }
                 </p>
-                {currentGatheringStep.isRemainder && getLedIdForLength(currentGatheringStep.length) && (
+                {currentGatheringStep.isRemainder && getLedIdForLength(currentGatheringStep.length) !== null && (
                   <div className="led-indicator">
                     <span className="led-icon active"></span>
                     <span className="led-text">
