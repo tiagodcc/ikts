@@ -84,14 +84,7 @@ export function Inventory() {
     }
     // Add a variety of standard copper rails as initial stock
     const initialStock = [
-      { length: 2000, width: 12, thickness: 5, qty: 5 },
-      { length: 2000, width: 20, thickness: 5, qty: 4 },
-      { length: 1000, width: 12, thickness: 5, qty: 3 },
-      { length: 1000, width: 20, thickness: 5, qty: 3 },
-      { length: 3000, width: 30, thickness: 10, qty: 2 },
-      { length: 2000, width: 30, thickness: 10, qty: 2 },
-      { length: 1000, width: 10, thickness: 3, qty: 4 },
-      { length: 2000, width: 25, thickness: 5, qty: 3 },
+      { length: 650, width: 20, thickness: 5, qty: 7 },
     ];
     
     for (const item of initialStock) {
