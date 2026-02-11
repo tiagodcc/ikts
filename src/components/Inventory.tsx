@@ -214,14 +214,6 @@ export function Inventory() {
               key={rail.id}
               className={`rail-card ${rail.isRemainder ? 'remainder' : ''}`}
             >
-              <div className="rail-visual">
-                <div
-                  className="rail-bar"
-                  style={{
-                    width: `${Math.min(100, (rail.length / 2000) * 100)}%`,
-                  }}
-                />
-              </div>
               <div className="rail-info">
                 <div className="rail-main">
                   <span className="rail-length">{formatLength(rail.length)}</span>
