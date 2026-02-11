@@ -5,7 +5,7 @@
  * Box 1 (LED 1): Contains spare parts with length >= 30cm (300mm+)
  */
 
-const LED_API_BASE = 'http://localhost:8081/api/led';
+const LED_API_BASE = 'http://192.168.137.27:8081/api/led';
 
 /**
  * Determine which LED/box to use based on the remainder length
