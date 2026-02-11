@@ -76,7 +76,8 @@ export const COMMON_RAIL_TYPES: RailType[] = [
 ];
 
 // Minimum usable remainder length (in mm)
-export const MIN_USABLE_LENGTH = 50;
+// Pieces smaller than this are thrown away as waste
+export const MIN_USABLE_LENGTH = 100;
 
 // Work Order Phases - strict sequential flow
 export type WorkOrderPhase = 

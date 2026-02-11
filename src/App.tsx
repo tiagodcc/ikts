@@ -22,9 +22,9 @@ function AppContent() {
     : null;
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
-    { id: 'inventory', label: 'Inventory', icon: '' },
-    { id: 'plans', label: 'Plans', icon: '' },
-    { id: 'work-orders', label: 'Work Orders', icon: '' },
+    { id: 'inventory', label: 'Manager', icon: '' },
+    { id: 'plans', label: 'CAD', icon: '' },
+    { id: 'work-orders', label: 'Operator', icon: '' },
   ];
 
   const handleSelectWorkOrder = (workOrder: WorkOrder) => {

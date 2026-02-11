@@ -129,8 +129,29 @@
   font-weight: 500;
 }
 
+/* Reference Section - Large image above content */
+.reference-section {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.reference-image {
+  max-width: 100%;
+  width: 600px;
+  height: auto;
+  border-radius: 8px;
+  border: 2px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
 /* Phase Content */
 .phase-content {
+  flex: 1;
+  min-width: 0;
   background: var(--card-bg);
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -151,19 +172,6 @@
 .phase-header p {
   margin: 0;
   color: var(--text-secondary);
-}
-
-/* Reference Section */
-.reference-section {
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.reference-image {
-  max-width: 300px;
-  height: auto;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
 }
 
 /* Progress Info */
@@ -567,7 +575,295 @@
   color: var(--text-secondary);
 }
 
+/* Rail Group Cutting Phase */
+.rail-group-card {
+  padding: 1.5rem;
+}
+
+.rail-group-card .step-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.step-source-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.step-source-badge.remainder {
+  background: var(--success-bg);
+  color: var(--success-color);
+}
+
+.step-source-badge.new-stock {
+  background: var(--info-bg);
+  color: var(--info-color);
+}
+
+.rail-group-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Stacked Bar Chart Visualization */
+.cutting-visualization {
+  background: var(--secondary-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.rail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.rail-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.rail-total {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.stacked-bar-container {
+  margin-bottom: 1rem;
+}
+
+.stacked-bar {
+  display: flex;
+  height: 70px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.bar-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  position: relative;
+  transition: all 0.3s ease;
+  border-right: 2px solid rgba(255,255,255,0.3);
+}
+
+.bar-segment:last-child {
+  border-right: none;
+}
+
+.bar-segment:hover {
+  filter: brightness(1.1);
+  transform: scaleY(1.02);
+}
+
+.cut-segment {
+  color: white;
+}
+
+.remainder-segment {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  color: white;
+}
+
+.waste-segment {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+  color: white;
+}
+
+.segment-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.segment-number {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.segment-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.segment-length {
+  font-size: 0.75rem;
+  opacity: 0.9;
+}
+
+/* Scale markers */
+.bar-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Legend */
+.bar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.legend-color {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.legend-color.remainder-color {
+  background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.legend-color.waste-color {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.legend-text {
+  color: var(--text-secondary);
+}
+
+/* Cuts Table */
+.cuts-list h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+}
+
+.cuts-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.cuts-table th,
+.cuts-table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.cuts-table th {
+  background: var(--secondary-bg);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.cuts-table .cut-length {
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.cut-number-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.cuts-table tfoot .total-row {
+  background: var(--secondary-bg);
+  font-weight: 600;
+}
+
+.cuts-table tfoot .total-row td {
+  border-bottom: none;
+}
+
+/* Rail Outcome */
+.rail-outcome {
+  background: var(--secondary-bg);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.outcome-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.outcome-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.outcome-label {
+  color: var(--text-secondary);
+}
+
+.outcome-value {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.outcome-divider {
+  width: 2px;
+  height: 24px;
+  background: var(--border-color);
+}
+
+.outcome-item.remainder-info .outcome-label,
+.outcome-item.remainder-info .outcome-value {
+  color: var(--success-color);
+}
+
+.outcome-item.waste-info .outcome-label,
+.outcome-item.waste-info .outcome-value {
+  color: var(--danger-color);
+}
+
 /* Responsive */
+@media (max-width: 768px) {
+  .reference-image {
+    width: 100%;
+    max-width: 450px;
+  }
+}
+
 @media (max-width: 600px) {
   .execution-header {
     flex-wrap: wrap;
@@ -598,5 +894,22 @@
   .summary-stats {
     flex-direction: column;
     gap: 1rem;
+  }
+  
+  .cuts-table {
+    font-size: 0.8rem;
+  }
+  
+  .cuts-table th,
+  .cuts-table td {
+    padding: 0.5rem;
+  }
+  
+  .reference-image {
+    max-width: 300px;
+  }
+  
+  .reference-section {
+    padding: 1rem;
   }
 }
